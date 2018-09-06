@@ -190,6 +190,7 @@ open class HorizontalBarChartRenderer: BarChartRenderer
         
         let borderWidth = dataSet.barBorderWidth
         let borderColor = dataSet.barBorderColor
+        let borderIsDashed = dataSet.barBorderIsDashed
         let drawBorder = borderWidth > 0.0
         
         context.saveGState()
@@ -271,6 +272,9 @@ open class HorizontalBarChartRenderer: BarChartRenderer
             {
                 context.setStrokeColor(borderColor.cgColor)
                 context.setLineWidth(borderWidth)
+                if borderIsDashed {
+                    context.setLineDash(phase: 6.0, lengths: [4.0])
+                }
                 context.stroke(barRect)
             }
 
