@@ -76,9 +76,10 @@ open class RadarChartRenderer: LineRadarRenderer
     
     /// Draws the RadarDataSet
     ///
-    /// - parameter context:
-    /// - parameter dataSet:
-    /// - parameter mostEntries: the entry count of the dataset with the most entries
+    /// - Parameters:
+    ///   - context:
+    ///   - dataSet:
+    ///   - mostEntries: the entry count of the dataset with the most entries
     internal func drawDataSet(context: CGContext, dataSet: IRadarChartDataSet, mostEntries: Int)
     {
         guard let chart = chart else { return }
@@ -258,8 +259,8 @@ open class RadarChartRenderer: LineRadarRenderer
                             viewPortHandler: viewPortHandler),
                         point: CGPoint(x: p.x, y: p.y - yoffset - valueFont.lineHeight),
                         align: .center,
-                        attributes: [NSAttributedStringKey.font: valueFont,
-                            NSAttributedStringKey.foregroundColor: dataSet.valueTextColorAt(j)]
+                        attributes: [NSAttributedString.Key.font: valueFont,
+                            NSAttributedString.Key.foregroundColor: dataSet.valueTextColorAt(j)]
                     )
                 }
                 

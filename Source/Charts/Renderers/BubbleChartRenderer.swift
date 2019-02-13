@@ -105,7 +105,7 @@ open class BubbleChartRenderer: BarLineScatterCandleBubbleRenderer
         let maxBubbleHeight: CGFloat = abs(viewPortHandler.contentBottom - viewPortHandler.contentTop)
         let referenceSize: CGFloat = min(maxBubbleHeight, maxBubbleWidth)
         
-        for j in stride(from: _xBounds.min, through: _xBounds.range + _xBounds.min, by: 1)
+        for j in _xBounds
         {
             guard let entry = dataSet.entryForIndex(j) as? BubbleChartDataEntry else { continue }
             
@@ -185,7 +185,7 @@ open class BubbleChartRenderer: BarLineScatterCandleBubbleRenderer
 
             let iconsOffset = dataSet.iconsOffset
 
-            for j in _xBounds.min..._xBounds.range + _xBounds.min
+            for j in _xBounds
             {
                 guard let e = dataSet.entryForIndex(j) as? BubbleChartDataEntry else { break }
 
@@ -221,7 +221,7 @@ open class BubbleChartRenderer: BarLineScatterCandleBubbleRenderer
                             x: pt.x,
                             y: pt.y - (0.5 * lineHeight)),
                         align: .center,
-                        attributes: [NSAttributedStringKey.font: valueFont, NSAttributedStringKey.foregroundColor: valueTextColor])
+                        attributes: [NSAttributedString.Key.font: valueFont, NSAttributedString.Key.foregroundColor: valueTextColor])
                 }
 
                 if let icon = e.icon, dataSet.isDrawIconsEnabled

@@ -24,7 +24,7 @@ open class DataRenderer: Renderer
     /// Subclasses should populate this array in drawData() or drawDataSet() to make the chart accessible.
     @objc final var accessibleChartElements: [NSUIAccessibilityElement] = []
 
-    @objc open let animator: Animator
+    @objc public let animator: Animator
     
     @objc public init(animator: Animator, viewPortHandler: ViewPortHandler)
     {
@@ -50,7 +50,8 @@ open class DataRenderer: Renderer
     
     /// Draws all highlight indicators for the values that are currently highlighted.
     ///
-    /// - parameter indices: the highlighted values
+    /// - Parameters:
+    ///   - indices: the highlighted values
     @objc open func drawHighlighted(context: CGContext, indices: [Highlight])
     {
         fatalError("drawHighlighted() cannot be called on DataRenderer")

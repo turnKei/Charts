@@ -62,8 +62,7 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
     @objc open func drawDataSet(context: CGContext, dataSet: ICandleChartDataSet)
     {
         guard
-            let dataProvider = dataProvider,
-            let chart = dataProvider as? CandleStickChartView
+            let dataProvider = dataProvider
             else { return }
 
         let trans = dataProvider.getTransformer(forAxis: dataSet.axisDependency)
@@ -71,7 +70,6 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
         let phaseY = animator.phaseY
         let barSpace = dataSet.barSpace
         let showCandleBar = dataSet.showCandleBar
-        let entryCount = dataSet.entryCount
         
         _xBounds.set(chart: dataProvider, dataSet: dataSet, animator: animator)
         
@@ -79,7 +77,7 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
         
         context.setLineWidth(dataSet.shadowWidth)
 
-        for j in stride(from: _xBounds.min, through: _xBounds.range + _xBounds.min, by: 1)
+        for j in _xBounds
         {
             // get the entry
             guard let e = dataSet.entryForIndex(j) as? CandleChartDataEntry else { continue }
@@ -258,7 +256,7 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
             }
 
             let axElement = createAccessibleElement(withIndex: j,
-                                                    container: chart,
+                                                    container: dataProvider,
                                                     dataSet: dataSet)
             { (element) in
                 element.accessibilityLabel = "\(doesContainMultipleDataSets ? "\(dataSet.label ?? "Dataset")" : "") " + "\(xPos) - \(accessibilityMovementDescription). low: \(low), high: \(high), opening: \(open), closing: \(close)"
@@ -315,7 +313,7 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
                 let lineHeight = valueFont.lineHeight
                 let yOffset: CGFloat = lineHeight + 5.0
                 
-                for j in stride(from: _xBounds.min, through: _xBounds.range + _xBounds.min, by: 1)
+                for j in _xBounds
                 {
                     guard let e = dataSet.entryForIndex(j) as? CandleChartDataEntry else { break }
                     
@@ -346,7 +344,7 @@ open class CandleStickChartRenderer: LineScatterCandleRadarRenderer
                                 x: pt.x,
                                 y: pt.y - yOffset),
                             align: .center,
-                            attributes: [NSAttributedStringKey.font: valueFont, NSAttributedStringKey.foregroundColor: dataSet.valueTextColorAt(j)])
+                            attributes: [NSAttributedString.Key.font: valueFont, NSAttributedString.Key.foregroundColor: dataSet.valueTextColorAt(j)])
                     }
                     
                     if let icon = e.icon, dataSet.isDrawIconsEnabled
